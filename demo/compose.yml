@@ -1,0 +1,43 @@
+services:
+  auth-proxy:
+    image: better-auth-proxy:latest
+    build:
+      context: ..
+      dockerfile: ../Dockerfile
+    env_file: ../.env
+    command: ["bun", "./src/index.ts"]
+    ports:
+      - "8080:8080"
+    networks:
+      - appnet
+    develop:
+      watch:
+        - action: rebuild
+          path: ./src
+
+  demo-app:
+    image: oven/bun:latest
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: ["bun", "--watch", "demo-app.ts"]
+    ports:
+      - "3000:3000"
+    networks:
+      - appnet
+
+  nginx:
+    image: nginx:alpine
+    depends_on:
+      - auth-proxy
+      - demo-app
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
