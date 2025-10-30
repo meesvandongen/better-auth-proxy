@@ -7,7 +7,6 @@ export const auth = betterAuth({
 			clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
 		},
 	},
-
 	session: {
 		expiresIn: 60 * 60 * 24 * 7,
 		cookieCache: {

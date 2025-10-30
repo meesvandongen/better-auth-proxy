@@ -1,5 +1,5 @@
 import { auth } from "./better-auth-server";
-import index from "./frontend/index.html";
+import index from "./login/index.html";
 
 Bun.serve({
 	port: 3000,
