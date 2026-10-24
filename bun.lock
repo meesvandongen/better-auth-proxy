@@ -1,5 +1,6 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "better-auth-proxy",
@@ -16,7 +17,7 @@
         "@types/react-dom": "^19.2.2",
       },
       "peerDependencies": {
-        "typescript": "^5",
+        "typescript": "^5 || ^7.0.0",
       },
     },
   },
