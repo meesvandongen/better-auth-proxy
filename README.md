@@ -10,10 +10,12 @@ OAuth2-Proxy-like auth_request service using Better Auth, plus a tiny demo app a
 
 ## Local development
 
-Install dependencies:
+Install dependencies with pnpm (pinned through corepack in `package.json`; pnpm 12 needs corepack 0.36 or newer):
 
 ```powershell
-bun install
+npm install -g corepack@latest
+corepack enable
+pnpm install
 ```
 
 Run everything via Docker Compose (recommended):
@@ -32,10 +34,18 @@ If you want to run one service locally with Bun:
 
 ```powershell
 # auth-proxy (listens on 8080)
-bun --watch ./src/index.ts
+pnpm run dev
 
 # demo-app (listens on 3000)
-bun --watch ./src/demo-app.ts
+bun --watch ./demo/demo-app.ts
+```
+
+Type-check, lint and format (Vite+):
+
+```powershell
+pnpm run typecheck
+pnpm run lint
+pnpm run fmt
 ```
 
 ## Config
