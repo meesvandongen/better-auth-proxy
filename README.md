@@ -5,7 +5,7 @@ OAuth2-Proxy-like auth_request service using Better Auth, plus a tiny demo app a
 ## Services
 
 - auth-proxy (Bun, port 8080): Implements `/oauth2/*` endpoints and Better Auth API under `/api/auth/*`.
-- demo-app (Bun, port 3000): Simple echo app that prints forwarded identity headers.
+- demo-app (Node, port 3000, the `demo/` workspace package): Simple echo app that prints forwarded identity headers.
 - nginx (port 80): Front proxy wiring `auth_request` to `auth-proxy` and proxying `/` to `demo-app`.
 
 ## Local development
@@ -30,14 +30,14 @@ Then open:
 - Demo app (behind NGINX): http://localhost/
 - Auth sign-in helper: http://localhost/oauth2/sign_in
 
-If you want to run one service locally with Bun:
+To run one service locally (the auth proxy needs Bun, the demo app runs on Node 24):
 
 ```powershell
 # auth-proxy (listens on 8080)
 pnpm run dev
 
 # demo-app (listens on 3000)
-bun --watch ./demo/demo-app.ts
+pnpm run dev:demo
 ```
 
 Type-check, lint and format (Vite+):

@@ -5,14 +5,13 @@ WORKDIR /app
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 RUN npm install -g corepack@latest && corepack enable
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-RUN pnpm install --frozen-lockfile --prod
+COPY demo/package.json ./demo/
+RUN pnpm install --frozen-lockfile --prod --filter better-auth-proxy
 
-# The services run on Bun (Bun.serve with HTML imports).
+# The auth proxy runs on Bun (Bun.serve with HTML imports).
 FROM oven/bun:latest
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
-# Both ports may be used depending on the service command
-EXPOSE 8080 3000
-# Default to auth-proxy; compose overrides this for demo-app
+EXPOSE 8080
 CMD ["bun", "./src/index.ts"]

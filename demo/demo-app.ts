@@ -1,13 +1,12 @@
-Bun.serve({
-	port: 3000,
-	routes: {
-		"/": (req) => {
-			const headers: Record<string, string> = {};
-			req.headers.forEach((value, key) => {
-				headers[key] = value;
-			});
-			// Return all incoming request headers as JSON
-			return Response.json({ headers });
-		},
-	},
-});
+import { createServer } from "node:http";
+
+createServer((req, res) => {
+	if (req.url !== "/") {
+		res.writeHead(404).end();
+		return;
+	}
+	// Return all incoming request headers as JSON
+	res
+		.writeHead(200, { "content-type": "application/json" })
+		.end(JSON.stringify({ headers: req.headers }));
+}).listen(3000);

@@ -3,7 +3,7 @@ services:
     image: better-auth-proxy:latest
     build:
       context: ..
-      dockerfile: ../Dockerfile
+      dockerfile: Dockerfile
     env_file: ../.env
     command: ["bun", "./src/index.ts"]
     ports:
@@ -16,11 +16,11 @@ services:
           path: ./src
 
   demo-app:
-    image: oven/bun:latest
+    image: node:24-alpine
     working_dir: /app
     volumes:
       - ./:/app
-    command: ["bun", "--watch", "demo-app.ts"]
+    command: ["node", "--watch", "demo-app.ts"]
     ports:
       - "3000:3000"
     networks:
